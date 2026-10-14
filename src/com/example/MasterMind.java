@@ -32,15 +32,14 @@ public class Mastermind {
 		String black = FEEDBACKB + WHITE + "Black" + RESET;
 		String white = FEEDBACKW + BLACK + "White" + RESET;
 		String empty = "Empty";
-		
+
 		int gamesWon = 0;
 
 		boolean playing = true;
-		
-		
+
 		// ===========================================================================================================================================================================================================
 		do {
-
+			
 			int currentRow = 0;
 			int winCondition = 0;
 
@@ -58,7 +57,6 @@ public class Mastermind {
 				for (String secretCodeField : secretCodeField) {
 					System.out.println(secretCodeField);
 				}
-
 				winCondition = 0;
 
 				System.out.println("\nRow " + currentRow);
@@ -96,7 +94,7 @@ public class Mastermind {
 							}
 						}
 					}
-					if(codeMakerHole[i].equalsIgnoreCase(black)) {
+					if (codeMakerHole[i].equalsIgnoreCase(black)) {
 						winCondition++;
 					}
 				}
@@ -104,7 +102,7 @@ public class Mastermind {
 				// =======================================================================================================================================================================================================================
 
 				// Feedback
-				System.out.println(winCondition);
+				
 				System.out.println("\n=========================");
 				System.out.println("|" + codeMakerHole[0] + "|" + codeMakerHole[1] + "|" + codeMakerHole[2] + "|"
 						+ codeMakerHole[3] + "|");
@@ -112,22 +110,29 @@ public class Mastermind {
 				System.out.println("|" + codeBreakerHole[0] + "|" + codeBreakerHole[1] + "|" + codeBreakerHole[2] + "|"
 						+ codeBreakerHole[3] + "|");
 				System.out.println("=========================\n");
-				if (winCondition >= 4) {
+				if (winCondition >= codeMakerHole.length) {
 					gamesWon = gamesWon += 1;
 					System.out.println(WONTXT + "W in the chat. YOU WON!" + RESET);
-					System.out.println("You guessed the code in " + currentRow + " rows");
+					System.out.println("You guessed the code in " + currentRow + " row(s)");
 					System.out.println("\nDo you want to play again? Yes|No");
 					String awnser = sc.next();
 					if (awnser.equalsIgnoreCase("Yes")) {
 						System.out.println("Current wins: " + gamesWon + "\n");
 						break;
+						
 					} else {
-						System.out.println("You won: " + gamesWon + " games!");
-						playing = false;
-						break;
+						
+						if (gamesWon > 1) {
+							System.out.println("You won: " + gamesWon + " games!");
+							break;
+						} else {
+							System.out.println("You won: " + gamesWon + " game?" + "\nYou kinda SUCK");
+							break;
+						}
 					}
-				} else if (currentRow == 10 && winCondition != 4) {
-					System.out.println("You lost. L bozo");
+				} else if (currentRow == 10 && winCondition != codeMakerHole.length) {
+					System.out.println("You lost. L bozo \nyou Lost your win streak!\nhow are you so bad???");
+					break;
 				}
 			}
 		} while (playing == true);
