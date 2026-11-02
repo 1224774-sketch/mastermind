@@ -16,7 +16,7 @@ public class Mastermind {
 		// Scanner
 		Scanner sc = new Scanner(System.in);
 
-		// colors styling
+		// colors
 
 		final String RESET = "\u001B[0m";
 		final String RED = "\u001B[31m";
@@ -34,38 +34,33 @@ public class Mastermind {
 		String empty = "Empty";
 
 		int gamesWon = 0;
+		int currentRow;
+		int winCondition = 0;
 
 		boolean playing = true;
 
-		// start of game
+		// start of the game
 		// ===========================================================================================================================================================================================================
 		do {
 
-			int currentRow = 0;
-			int winCondition = 0;
-
 			// secret code is made
-			
+
 			Random random = new Random();
 			for (int i = 0; i != secretCodeField.length; i++) {
 				secretCodeField[i] = colors[random.nextInt(colors.length)];
 			}
 
-			// main game
-			// =========================================================================================================================================
+			// Hole 1
+// =========================================================================================================================================
 			for (currentRow = 1; currentRow <= 10; currentRow++) {
-//			should look like (secretCodeField.length) (for debugging)
 				for (String secretCodeField : secretCodeField) {
 					System.out.println(secretCodeField);
 				}
-				
 				winCondition = 0;
-				System.out.println("\nRow " + currentRow);
 
-				// hole input validation
-				// =========================================================================================================================================
-				int j = 0;
-				for (j = 0; j < codeBreakerHole.length; j++) {
+				System.out.println("\nRow " + currentRow);
+				// hole input
+				for (int j = 0; j < codeBreakerHole.length; j++) {
 					System.out.print("Choose a color that you want to place in hole " + (j + 1) + ": ");
 					boolean correct = false;
 					do {
@@ -84,7 +79,6 @@ public class Mastermind {
 
 				// Holes check
 				// =======================================================================================================================================================================================================================
-
 				for (int i = 0; i < codeBreakerHole.length; i++) {
 					codeMakerHole[i] = empty;
 					for (int x = 0; x < codeBreakerHole.length; x++) {
@@ -99,48 +93,46 @@ public class Mastermind {
 						winCondition++;
 					}
 				}
-
 				// Feedback
 				// =======================================================================================================================================================================================================================
-
 				System.out.println("\n=========================");
-				System.out.println("|" + codeMakerHole[0] + "|" + codeMakerHole[1] + "|" + codeMakerHole[2] + "|"
-						+ codeMakerHole[3] + "|");
-				System.out.println("=========================");
-				System.out.println("|" + codeBreakerHole[0] + "|" + codeBreakerHole[1] + "|" + codeBreakerHole[2] + "|"
-						+ codeBreakerHole[3] + "|");
-				System.out.println("=========================\n");
+				System.out.print("|");
+				for (String pin : codeMakerHole) {
+					System.out.print(pin + "|");
+				}
+				System.out.println("\n=========================");
+				System.out.print("|");
+				for (String guess : codeBreakerHole) {
+					System.out.print(guess + "|");
+				}
+				System.out.println("\n=========================\n");
 
-				// winCheck
+				// win check
 				// =======================================================================================================================================================================================================================
 
 				if (winCondition >= codeMakerHole.length) {
-					gamesWon = gamesWon += 1;
+					gamesWon++;
 					System.out.println(WONTXT + "W in the chat. YOU WON!" + RESET);
 					System.out.println("You guessed the code in " + currentRow + " row(s)");
-					System.out.println("\nDo you want to play again? Yes|No");
-					String awnser = sc.next();
-					
-					if (awnser.equalsIgnoreCase("Yes")) {
-						System.out.println("Current wins: " + gamesWon + "\n");
-						break;
-					} else {
-
-						if (gamesWon > 1) {
-							System.out.println("You won: " + gamesWon + " games!");
-							playing = false;
-							break;
-						} else {
-							System.out.println("You won: " + gamesWon + " game?" + "\nYou kinda SUCK");
-							playing = false;
-							break;
-						}
-					}
-				} else if (currentRow == 10 && winCondition != codeMakerHole.length) {
-					System.out.println("You lost. L bozo \nyou Lost your win streak!\nhow are you so bad???");
 					break;
 				}
+				
+			}// end for 
+			if (winCondition < codeMakerHole.length) {
+				System.out.println("You lost. L bozo \nyou Lost your win streak!\nhow are you so bad???");
 			}
+			
+			System.out.println("\nDo you want to play again? Yes|No");
+			String awnser = sc.next();
+			
+			if (awnser.equalsIgnoreCase("Yes")) {
+				System.out.println("Current wins: " + gamesWon + "\n");
+			} else {
+				System.out.println("You won: " + gamesWon + " games!");
+				playing = false;
+				break;
+			}
+			
 		} while (playing == true);
 
 		sc.close();
