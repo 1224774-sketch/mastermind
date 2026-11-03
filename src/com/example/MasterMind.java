@@ -128,9 +128,8 @@ public class Mastermind {
 			if (awnser.equalsIgnoreCase("Yes")) {
 				System.out.println("Current wins: " + gamesWon + "\n");
 			} else {
-				System.out.println("You won: " + gamesWon + " games!");
+				System.out.println("You won: " + gamesWon + " game(s)!");
 				playing = false;
-				break;
 			}
 			
 		} while (playing == true);
